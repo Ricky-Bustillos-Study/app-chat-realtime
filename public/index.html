@@ -59,5 +59,36 @@
     </div>
   </div>
   
+  <script type="text/javascript">
+    var socket = io('http://localhost:3000');
+
+    function renderMessage(message) {
+      $('#messages').append(`
+        <p class="card-text my-1">
+          <span class="fw-bold"> ${message.username} </span>
+          <span> ${message.message} </span>
+        </p>`);
+    }
+
+
+    $('#chat').submit(function(e) {
+      e.preventDefault();
+
+      var username = $('input[name=username]').val();
+      var message = $('input[name=message]').val();
+
+      // If both username and message are filled
+      if (username && message) {
+        var messageObject = {
+          username: username,
+          message: message
+        };
+
+        renderMessage(messageObject);
+
+        socket.emit('sendMessage', messageObject);  // Send message object to server
+      }
+    });
+  </script>
 </body>
 </html>

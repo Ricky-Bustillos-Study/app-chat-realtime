@@ -24,4 +24,17 @@ app.use('/', (req, res) => {
   res.render('index.html');
 })
 
+let messages = [];
+
+io.on(`connection`, socket => {
+  console.log(`socket conectado ${socket.id}`);
+
+  // listening sendMessage event
+  socket.on('sendMessage', data => {
+    // saving the received message in the messages array
+    messages.push(data);
+
+  });
+})
+
 server.listen(3000)
