@@ -29,8 +29,12 @@ let messages = [];
 io.on(`connection`, socket => {
   console.log(`socket conectado ${socket.id}`);
 
+  // when connected, send the previous messages array
+  socket.emit('previousMessages', messages);
+
   // listening sendMessage event
   socket.on('sendMessage', data => {
+
     // saving the received message in the messages array
     messages.push(data);
 

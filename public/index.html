@@ -19,7 +19,7 @@
 
   <div class="container">
     <div class="row justify-content-center align-items-center min-vh-100">
-      <div class="col-6">
+      <div class="col-12 col-md-8 col-lg-6">
 
         <form id="chat">
           <!-- Name input -->
@@ -33,7 +33,7 @@
           <div class="row my-3">
             <div class="col-12">
               <div class="card" style="height: 300px;">
-                <div class="card-body py-0" id="messages">
+                <div class="card-body py-0 overflow-auto d-flex flex-column-reverse" id="messages">
                 </div>
               </div>
             </div>
@@ -63,14 +63,25 @@
     var socket = io('http://localhost:3000');
 
     function renderMessage(message) {
-      $('#messages').append(`
+      $('#messages').prepend(`
         <p class="card-text my-1">
           <span class="fw-bold"> ${message.username} </span>
           <span> ${message.message} </span>
         </p>`);
+      
+
+      // var messagesElement = document.getElementById('messages');
+      // messagesElement.scrollTop = messagesElement.scrollHeight - messagesElement.clientHeight;
+
     }
 
-    socket.on('receivedMessage', (message) => {
+    socket.on('previousMessages', messages => {
+      for (let message of messages) {
+        renderMessage(message);
+      }
+    })
+
+    socket.on('receivedMessage', message => {
       renderMessage(message);
     });
 
