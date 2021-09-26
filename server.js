@@ -34,6 +34,8 @@ io.on(`connection`, socket => {
     // saving the received message in the messages array
     messages.push(data);
 
+    // sending the received message to all sockets connected
+    socket.broadcast.emit('receivedMessage', data);
   });
 })
 
