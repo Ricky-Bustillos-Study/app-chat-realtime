@@ -59,48 +59,6 @@
     </div>
   </div>
   
-  <script type="text/javascript">
-    var socket = io('http://localhost:3000');
-
-    function renderMessage(message) {
-      $('#messages').prepend(`
-        <p class="card-text my-1">
-          <span class="fw-bold"> ${message.username} </span>
-          <span> ${message.message} </span>
-        </p>`);
-      
-      // var messagesElement = document.getElementById('messages');
-      // messagesElement.scrollTop = messagesElement.scrollHeight - messagesElement.clientHeight;
-    }
-
-    socket.on('previousMessages', messages => {
-      for (let message of messages) {
-        renderMessage(message);
-      }
-    })
-
-    socket.on('receivedMessage', message => {
-      renderMessage(message);
-    });
-
-    $('#chat').submit(function(e) {
-      e.preventDefault();
-
-      var username = $('input[name=username]').val();
-      var message = $('input[name=message]').val();
-
-      // If both username and message are filled
-      if (username && message) {
-        var messageObject = {
-          username: username,
-          message: message
-        };
-
-        renderMessage(messageObject);
-
-        socket.emit('sendMessage', messageObject);  // Send message object to server
-      }
-    });
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>
